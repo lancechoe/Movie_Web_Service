@@ -7,19 +7,45 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    const DOM = ReactDOM.createRoot(document.querySelector("#root"));
-    function Container() {
-      let [counter, setCounter] = React.useState(0);
-      const onClick = () => {
-        setCounter(counter + 1);
+    function App() {
+      const [amount, setAmount] = React.useState();
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
       };
+      const reset = () => setAmount(0);
+      const onFlip = () => setFlipped((current) => !current);
       return (
         <div>
-          <h3>Total Clicks : {counter}</h3>
-          <button onClick={onClick}>Click me</button>
+          <div>
+            <h1 className="hi">Super Converter</h1>
+            <label htmlFor="minutes">Minutes</label>
+            <input
+              value={flipped ? amount * 60 : amount}
+              id="minutes"
+              placeholder="Minutes"
+              type="number"
+              onChange={onChange}
+              disabled={flipped === true}
+            />
+          </div>
+          <div>
+            <label htmlFor="hours">Hours</label>
+            <input
+              value={flipped ? amount : Math.round(amount / 60)}
+              id="hours"
+              placeholder="Hours"
+              type="number"
+              onChange={onChange}
+              disabled={flipped === false}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={onFlip}>Flip</button>
         </div>
       );
     }
-    DOM.render(<Container />);
+    const DOM = ReactDOM.createRoot(document.querySelector("#root"));
+    DOM.render(<App />);
   </script>
 </html>
