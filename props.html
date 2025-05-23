@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <!-- React 컴포넌트를 렌더링할 div -->
+    <div id="root"></div>
+  </body>
+
+  <!-- React 라이브러리와 Babel을 불러옴 -->
+  <!-- React (컴포넌트 생성에 사용) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <!-- ReactDOM (React 컴포넌트를 HTML에 렌더링하는 데 사용) -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel (JSX 문법을 브라우저에서 이해할 수 있게 변환해줌) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- JSX를 사용하므로 type을 text/babel로 설정 -->
+  <script type="text/babel">
+    function Btn({ banana, big }) {
+      return (
+        <button
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            fontSize: big ? 18 : 16,
+          }}
+        >
+          {banana}
+        </button>
+      );
+    }
+
+    function App() {
+      return (
+        <div>
+          <Btn banana="Save Changes" big={true} />
+          <Btn banana="Continue" />
+        </div>
+      );
+    }
+
+    // App 컴포넌트를 #root div에 렌더링
+    const DOM = ReactDOM.createRoot(document.querySelector("#root"));
+    DOM.render(<App />);
+  </script>
+</html>
