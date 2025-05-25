@@ -14,16 +14,16 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <!-- JSX를 사용하므로 type을 text/babel로 설정 -->
   <script type="text/babel">
-    function Btn({ banana, big }) {
+    function Btn({ banana, clicked }) {
       return (
         <button
+          onClick={clicked}
           style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
-            fontSize: big ? 18 : 16,
           }}
         >
           {banana}
@@ -32,9 +32,11 @@
     }
 
     function App() {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => setValue("Revert Changes");
       return (
         <div>
-          <Btn banana="Save Changes" big={true} />
+          <Btn banana={value} clicked={changeValue} />
           <Btn banana="Continue" />
         </div>
       );
