@@ -36,59 +36,105 @@ function App() {
     setDisplayMoney(money);
     setMoney("");
   };
+
+  /* Movie */
+  const [mloading, setmLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+  const getMovies = async () => {
+    const json = await (
+      await fetch(
+        "https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year"
+      )
+    ).json();
+    setMovies(json.data.movies);
+    setmLoading(false);
+  };
+  useEffect(() => {
+    getMovies();
+  }, []);
+
   return (
     <div>
-      <h1>My To Do ({toDos.length})</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          onChange={onChange}
-          value={toDo}
-          type="text"
-          placeholder="Write Your To Do.."
-        ></input>
-        <button>Add To Do</button>
-      </form>
-      <hr />
-      <ul>
-        {toDos.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-
-      <h1>The Coins {loading ? "" : `(${coins.length})`}</h1>
-      <form onSubmit={moneySubmit}>
-        <input
-          onChange={moneyChange}
-          value={money}
-          type="text"
-          placeholder="How much do you have?"
-        ></input>
-        <button>Submit</button>
-      </form>
-
-      {loading ? (
-        <strong>Loading...</strong>
-      ) : (
-        <select>
-          {coins.map((coin) => (
-            <option>
-              {coin.name} ({coin.symbol}) : $ {coin.quotes.USD.price.toFixed(2)}
-            </option>
+      {/* ToDo */}
+      <div>
+        <h1>My To Do ({toDos.length})</h1>
+        <form onSubmit={onSubmit}>
+          <input
+            onChange={onChange}
+            value={toDo}
+            type="text"
+            placeholder="Write Your To Do.."
+          ></input>
+          <button>Add To Do</button>
+        </form>
+        <hr />
+        <ul>
+          {toDos.map((item, index) => (
+            <li key={index}>{item}</li>
           ))}
-        </select>
-      )}
-      <h4>
-        {displayMoney && coins.length > 0 && (
-          <>
-            You can buy{" "}
-            {(
-              parseFloat(displayMoney) /
-              coins.find((coin) => coin.id === "btc-bitcoin").quotes.USD.price
-            ).toFixed(5)}{" "}
-            BTC
-          </>
+        </ul>
+      </div>
+
+      {/* Coin */}
+      <div>
+        <h1>The Coins {loading ? "" : `(${coins.length})`}</h1>
+        <form onSubmit={moneySubmit}>
+          <input
+            onChange={moneyChange}
+            value={money}
+            type="text"
+            placeholder="How much do you have?"
+          ></input>
+          <button>Submit</button>
+        </form>
+
+        {loading ? (
+          <strong>Loading...</strong>
+        ) : (
+          <select>
+            {coins.map((coin) => (
+              <option key={coin.id}>
+                {coin.name} ({coin.symbol}) : ${" "}
+                {coin.quotes.USD.price.toFixed(2)}
+              </option>
+            ))}
+          </select>
         )}
-      </h4>
+        <h4>
+          {displayMoney && coins.length > 0 && (
+            <>
+              You can buy{" "}
+              {(
+                parseFloat(displayMoney) /
+                coins.find((coin) => coin.id === "btc-bitcoin").quotes.USD.price
+              ).toFixed(5)}{" "}
+              BTC
+            </>
+          )}
+        </h4>
+      </div>
+
+      {/* Movies */}
+      <div>
+        {mloading ? (
+          <h1>Loading...</h1>
+        ) : (
+          <div>
+            {movies.map((movie) => (
+              <div key={movie.id}>
+                <img src={movie.medium_cover_image} />
+                <h2>{movie.title}</h2>
+                <p>{movie.summary}</p>
+                <ul>
+                  {movie.genres.map((g) => (
+                    <li key={g}>{g}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
