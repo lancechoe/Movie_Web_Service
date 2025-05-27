@@ -1,51 +1,94 @@
 import { useState, useEffect } from "react";
 
-function Hello() {
-  function byFn() {
-    console.log("bye :(");
-  }
-  function hiFn() {
-    console.log("created :)");
-    return byFn;
-  }
-  useEffect(hiFn, []);
-  return <h1>Hello</h1>;
-}
-
 function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const [showing, setShowing] = useState(false);
-
-  const onClick = () => setValue((count) => count + 1);
-  const onChange = (event) => setKeyword(event.target.value);
-  const clickEvent = () => setShowing((prev) => !prev);
-
-  console.log("I run all the time");
-  useEffect(() => {
-    console.log("I run only once");
-  }, []);
-  useEffect(() => {
-    if (keyword !== "" && keyword.length > 5) {
-      console.log("I run when 'keyword' changes.");
+  /*TODO*/
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+  const onChange = (event) => setToDo(event.target.value);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (toDo === "") {
+      return;
     }
-  }, [keyword]);
-  useEffect(() => {
-    console.log("I run when 'counter' changes.");
-  }, [counter]);
+    setToDos((currentArray) => [toDo, ...currentArray]);
+    setToDo("");
+  };
 
+  /*Coin*/
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  const [money, setMoney] = useState("");
+  const [displayMoney, setDisplayMoney] = useState("");
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+  }, []);
+  const moneyChange = (event) => setMoney(event.target.value);
+  const moneySubmit = (event) => {
+    event.preventDefault();
+    if (money === "") {
+      return;
+    }
+    setDisplayMoney(money);
+    setMoney("");
+  };
   return (
     <div>
-      <input
-        value={keyword}
-        onChange={onChange}
-        type="text"
-        placeholder="Search here..."
-      />
-      <h1>{counter}</h1>
-      {showing ? <Hello /> : null}
-      <button onClick={onClick}>Click</button>
-      <button onClick={clickEvent}>{showing ? "Hide" : "Show"}</button>
+      <h1>My To Do ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={toDo}
+          type="text"
+          placeholder="Write Your To Do.."
+        ></input>
+        <button>Add To Do</button>
+      </form>
+      <hr />
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+
+      <h1>The Coins {loading ? "" : `(${coins.length})`}</h1>
+      <form onSubmit={moneySubmit}>
+        <input
+          onChange={moneyChange}
+          value={money}
+          type="text"
+          placeholder="How much do you have?"
+        ></input>
+        <button>Submit</button>
+      </form>
+
+      {loading ? (
+        <strong>Loading...</strong>
+      ) : (
+        <select>
+          {coins.map((coin) => (
+            <option>
+              {coin.name} ({coin.symbol}) : $ {coin.quotes.USD.price.toFixed(2)}
+            </option>
+          ))}
+        </select>
+      )}
+      <h4>
+        {displayMoney && coins.length > 0 && (
+          <>
+            You can buy{" "}
+            {(
+              parseFloat(displayMoney) /
+              coins.find((coin) => coin.id === "btc-bitcoin").quotes.USD.price
+            ).toFixed(5)}{" "}
+            BTC
+          </>
+        )}
+      </h4>
     </div>
   );
 }
