@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+.movie-list {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 500px;
+  gap: 40px;
+
+  /* 부드러운 스크롤 */
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.movie-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.movie-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.movie-card {
+  flex: 0 0 auto; /* 가로로 유지되도록 */
+  scroll-snap-align: start;
+}
+
+.section-title {
+  font-size: 50px;
+  font-weight: 900;
+  text-align: center;
+  position: relative;
+  top: 300px; /* 또는 margin-top 대신 이걸 사용 */
+  margin-bottom: -120px;
+  background: linear-gradient(100deg, #b85050, #232246);
+  text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.3);
+  letter-spacing: 2.5px;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.title{
+    font-size: 45px;
+    margin-bottom: -10px;
+}
+
+.detail-container {
+  display: flex;
+  justify-content: center;  /* 가로 가운데 */
+  align-items: center;      /* 세로 가운데 */
+  min-height: 80vh;
+  flex-direction: column;
+  padding: 110px 20px;
+  text-align: center;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.loader-wrapper {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.detail-content img {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.summary {
+  max-width: 500px;   /* summary 너비 제한 */
+  margin: 0 auto 30px auto;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  font-size: 20px;
+}
+
+.genres {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.genres li {
+  padding: 6px 14px;
+  border-radius: 15px;
+  font-size: 18px;
+  color: white;
+  background: linear-gradient(50deg, #b85050, #232246);
+}
+
+

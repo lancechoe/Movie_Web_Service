@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
+import "./Home.css";
 
 function Detail() {
   const { id } = useParams();
@@ -8,7 +10,7 @@ function Detail() {
 
   const getMovies = async () => {
     const response = await fetch(
-      "https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year"
+      "https://yts.mx/api/v2/list_movies.json?sort_by=like_count"
     );
     const json = await response.json();
     const found = json.data.movies.find((movie) => movie.id === parseInt(id));
@@ -21,15 +23,17 @@ function Detail() {
   }, [id]);
 
   return (
-    <div>
+    <div className="detail-container">
       {loading ? (
-        <h1>Loading...</h1>
+        <div className="loader-wrapper">
+          <ClipLoader color="#3498db" size={60} />
+        </div>
       ) : movie ? (
-        <div>
-          <h1>{movie.title}</h1>
+        <div className="detail-content">
+          <h1 className="title">{movie.title}</h1>
           <img src={movie.medium_cover_image} alt={movie.title} />
-          <p>{movie.summary || "No summary available."}</p>
-          <ul>
+          <p className="summary">{movie.summary || "No summary available."}</p>
+          <ul className="genres">
             {movie.genres.map((g) => (
               <li key={g}>{g}</li>
             ))}

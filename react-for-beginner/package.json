@@ -12,7 +12,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
+    "react-spinners": "^0.17.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -41,5 +42,8 @@
       "last 1 safari version"
     ]
   },
-    "homepage": "https://lancechoe.github.io/Movie_Web_Service"
+  "homepage": "https://lancechoe.github.io/Movie_Web_Service",
+  "devDependencies": {
+    "ajv": "^7.2.4"
+  }
 }
