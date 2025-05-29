@@ -42,8 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://lancechoe.github.io/Movie_Web_Service",
-  "devDependencies": {
-    "ajv": "^7.2.4"
-  }
+  "homepage": "https://lancechoe.github.io/Movie_Web_Service"
 }
