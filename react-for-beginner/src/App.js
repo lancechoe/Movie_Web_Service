@@ -5,7 +5,7 @@ import "./App.module.css";
 
 function App() {
   return (
-    <Router basename="/Movie_Web_Service">
+    <Router>
       <Routes>
         <Route path="/movie/:id" element={<Detail />}></Route>
         <Route path="/" element={<Home />}></Route>
