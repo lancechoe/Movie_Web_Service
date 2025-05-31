@@ -7,7 +7,17 @@ Virtual DOM / 빠른 성능
 커뮤니티 크고 문서 많음 / 배우기 쉬움, 오류 해결 쉬움
 모바일까지 확장 가능 / React Native
 
+HEAD
 MovieWeb/Home.jpg
 
 https://lancechoe.github.io/Movie_Web_Service/#/
+=======
+
+"Movies You Must Watch"
+
+https://lancechoe.github.io/Movie_Web_Service/#/
+
+dfaab281f7d3131ed9d1abd11d6083c85e8b2e30
 ```
+
+![Home](https://github.com/user-attachments/assets/aebb3c49-e58d-4e55-8cbd-3c82d12ea07b)
